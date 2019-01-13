@@ -104,8 +104,7 @@ class OwnerController {
         ModelAndView mav = new ModelAndView("owners/ownerDetails");
         OwnerDTO owner = ownerClient.findOwner(ownerId);
         owner.getPets().forEach(pet -> {
-            Set<VisitDTO> visits = new HashSet<>();
-            visitClient.findVisitsByPetId(pet.getId()).forEach(visits::add);
+            Set<VisitDTO> visits = new HashSet<>(visitClient.findVisitsByPetId(pet.getId()));
             pet.setVisits(visits);
         });
         mav.addObject("owner", owner);

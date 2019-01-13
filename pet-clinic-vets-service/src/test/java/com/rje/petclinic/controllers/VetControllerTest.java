@@ -20,16 +20,16 @@ import static org.mockito.Mockito.when;
 class VetControllerTest {
 
     @Mock
-    public VetRepository vetRepository;
+    private VetRepository vetRepository;
 
     @InjectMocks
-    public VetController vetController;
+    private VetController vetController;
 
-    public List<Vet> vetList;
+    private List<Vet> vetList;
 
-    public Vet vet1;
-    public Vet vet2;
-    public Vet vet3;
+    private Vet vet1;
+    private Vet vet2;
+    private Vet vet3;
 
     @BeforeEach
     void setUp() {

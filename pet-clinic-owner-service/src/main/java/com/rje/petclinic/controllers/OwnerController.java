@@ -22,13 +22,13 @@ public class OwnerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@RequestBody Owner owner) {
-        Owner savedOwner = ownerRepository.save(owner);
-        return savedOwner;
+        return ownerRepository.save(owner);
     }
 
     @GetMapping("/{ownerId}")
     public Owner findOwner(@PathVariable("ownerId") Long ownerId) {
-        return ownerRepository.findById(ownerId).get();
+        return ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new RuntimeException("owner with id=" + ownerId + " not found"));
     }
 
     @GetMapping
@@ -40,9 +40,7 @@ public class OwnerController {
 
     @GetMapping("/findByLastNameLike/{name}")
     public List<Owner> findAllByLastNameLike(@PathVariable("name") String name) {
-        List<Owner> owners = new ArrayList<>();
-        ownerRepository.findAllByLastNameLike(name).forEach(owners::add);
-        return owners;
+        return new ArrayList<>(ownerRepository.findAllByLastNameLike(name));
     }
 
     @GetMapping("/findByLastName/{name}")
@@ -52,24 +50,23 @@ public class OwnerController {
 
     @PutMapping(value = "/{ownerId}")
     public Owner updateOwner(@PathVariable("ownerId") Long ownerId, @RequestBody Owner owner) {
-        Owner savedOwner = ownerRepository.save(owner);
-        return savedOwner;
+        return ownerRepository.save(owner);
     }
 
     @PostMapping("/{ownerId}/pets")
     public Pet createPet(@PathVariable("ownerId") Long ownerId, @RequestBody Pet pet) {
-        Owner owner = ownerRepository.findById(ownerId).get();
+        Owner owner = ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new RuntimeException("owner with id=" + ownerId + " not found"));
         pet.setOwner(owner);
-        Pet savedPet = petRepository.save(pet);
-        return savedPet;
+        return petRepository.save(pet);
     }
 
     @PutMapping("/{ownerId}/pets/{petId}")
     public Pet savePet(@PathVariable("ownerId") Long ownerId, @PathVariable("petId") Long petId, @RequestBody Pet pet) {
-        Owner owner = ownerRepository.findById(ownerId).get();
+        Owner owner = ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new RuntimeException("owner with id=" + ownerId + " not found"));
         pet.setOwner(owner);
-        Pet savedPet = petRepository.save(pet);
-        return savedPet;
+        return petRepository.save(pet);
     }
 
     @GetMapping("/findOwnerByPetId/{petId}")

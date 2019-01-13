@@ -23,24 +23,24 @@ import static org.mockito.Mockito.when;
 class OwnerControllerTest {
 
     @Mock
-    public OwnerRepository ownerRepository;
+    private OwnerRepository ownerRepository;
 
     @InjectMocks
-    public OwnerController ownerController;
+    private OwnerController ownerController;
 
-    public List<Owner> ownerList;
+    private List<Owner> ownerList;
 
-    public Owner owner1;
-    public Owner owner2;
-    public Owner owner3;
+    private Owner owner1;
+    private Owner owner2;
+    private Owner owner3;
 
     @BeforeEach
     void setUp() {
         ownerList = new ArrayList<>();
 
-        owner1 = Owner.builder().id(1l).firstName("Randy").lastName("Moss").build();
-        owner2 = Owner.builder().id(2l).firstName("Chris").lastName("Carter").build();
-        owner3 = Owner.builder().id(3l).firstName("John").lastName("Randle").build();
+        owner1 = Owner.builder().id(1L).firstName("Randy").lastName("Moss").build();
+        owner2 = Owner.builder().id(2L).firstName("Chris").lastName("Carter").build();
+        owner3 = Owner.builder().id(3L).firstName("John").lastName("Randle").build();
 
         ownerList.add(owner1);
         ownerList.add(owner2);
@@ -80,7 +80,7 @@ class OwnerControllerTest {
 
     @Test
     void updateOwner() {
-        when(ownerRepository.save(ArgumentMatchers.any())).thenReturn(Owner.builder().id(35l).build());
+        when(ownerRepository.save(ArgumentMatchers.any())).thenReturn(Owner.builder().id(35L).build());
 
         Owner savedOwner = ownerController.updateOwner(35L, owner1);
 
